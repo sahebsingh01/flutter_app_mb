@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:muski_bday/ui/info/name_info.dart';
+import 'package:muski_bday/ui/info/signature.dart';
 import 'package:muski_bday/ui/info/upload_profile.dart';
 import 'package:muski_bday/ui/info/uploal_picture.dart';
+import 'package:muski_bday/ui/splash/splash.dart';
+import 'package:muski_bday/ui/uploadform/upload_Info.dart';
 import 'package:muski_bday/utils/constants.dart';
 
 class NavigationUtils {
@@ -15,6 +19,16 @@ class NavigationUtils {
         return MaterialPageRoute(builder: (_) => UploadProfileInfo());
       case NavigationConstants.routeUploadPicture:
         return MaterialPageRoute(builder: (_) => UploadPicture());
+      case NavigationConstants.routeSplashScreen:
+        return MaterialPageRoute(builder: (_) => SplashScreen());
+      case NavigationConstants.routeSignatureScreen:
+        return MaterialPageRoute(builder: (_) => SignatureScreen());
+      case NavigationConstants.routeUploadInformation:
+        final Uint8List signature = args[DicParams.signature];
+        return MaterialPageRoute(
+            builder: (_) => UploadInformation(
+                  signature: signature,
+                ));
       default:
         return _errorRoute(" Coming soon...");
     }

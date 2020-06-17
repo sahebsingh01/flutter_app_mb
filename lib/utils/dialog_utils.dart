@@ -59,7 +59,7 @@ class DialogUtils {
   static CupertinoAlertDialog _showCupertinoAlertDialog(
       BuildContext context, String message) {
     return CupertinoAlertDialog(
-      title: Text(Localization.of(context).appName),
+      title: Text('Muskan\'s Birthday'),
       content: Text(message),
       actions: _actions(context),
     );
@@ -68,7 +68,7 @@ class DialogUtils {
   static AlertDialog _showMaterialAlertDialog(
       BuildContext context, String message) {
     return AlertDialog(
-      title: Text(Localization.of(context).appName),
+      title: Text('Muskan\'s Birthday'),
       content: Text(message),
       actions: _actions(context),
     );
@@ -83,7 +83,7 @@ class DialogUtils {
       bool isCancelEnable,
       Function cancelButtonAction) {
     return AlertDialog(
-      title: Text(Localization.of(context).appName),
+      title: Text('Muskan\'s Birthday'),
       content: Text(message),
       actions: _okCancelActions(
         context: context,
@@ -106,7 +106,7 @@ class DialogUtils {
     Function cancelButtonAction,
   ) {
     return CupertinoAlertDialog(
-        title: Text(Localization.of(context).appName),
+        title: Text('Muskan\'s Birthday'),
         content: Text(message),
         actions: isCancelEnable
             ? _okCancelActions(

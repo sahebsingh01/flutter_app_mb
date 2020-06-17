@@ -9,6 +9,8 @@ import 'package:muski_bday/utils/permission_utils.dart';
 import 'package:muski_bday/widgets/custom_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../utils/constants.dart';
+
 class UploadPicture extends StatefulWidget {
   @override
   _UploadPictureState createState() => _UploadPictureState();
@@ -22,7 +24,7 @@ class _UploadPictureState extends State<UploadPicture> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height*1.1,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
@@ -70,42 +72,82 @@ class _UploadPictureState extends State<UploadPicture> {
                       padding: const EdgeInsets.only(top: 40.0),
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width:
-                                MediaQuery.of(context).size.height * 0.8,
-                                color: Colors.red,
-                            child: InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
+                        child: Stack(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                width: MediaQuery.of(context).size.height * 0.8,
+                                color: Colors.white,
+                                child: _image != null ? Image.file(_image,fit: BoxFit.cover,) : CachedNetworkImage(
+                                  imageUrl: "",
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, value, error) =>
+                                      Container(
+                                    child: Image.asset(
+                                      ImageConstants.defaultGroupPhoto,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator()),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: InkWell(
                                 onTap: () {
                                   _getImageFromGallery();
                                 },
-                                child: CachedNetworkImage(
-                                  imageUrl: "",
-                                  fit: BoxFit.cover,
-                                  errorWidget:
-                                      (context, value, error) =>
-                                          Image.asset(ImageConstants
-                                              .userDefaultImage),
-                                  placeholder: (context, url) => Center(
-                                      child:
-                                          CircularProgressIndicator()),
-                                )),
-                          ),
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 10,
+                                        color: Colors.black.withAlpha(25),
+                                      )
+                                    ],
+                                  ),
+                                  child: Center(
+                                    child: Image.asset(
+                                      ImageConstants.selectPicture,
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Center(
-                        child: CustomButton(onPressAction: () {
+                        child: CustomButton(isTitleButton: false, onPressAction: () {
                           NavigationUtils.push(
-                              context, NavigationConstants.routeUploadPicture);
+                              context, NavigationConstants.routeSignatureScreen);
                         }),
                       ),
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Center(
+                        child: CustomButton(
+                            isTitleButton: true,
+                            onPressAction: () {
+                              NavigationUtils.pop(context);
+                            }),
+                      ),
+                    ),
                   ],
                 ),
               ),

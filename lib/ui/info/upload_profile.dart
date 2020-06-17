@@ -9,6 +9,8 @@ import 'package:muski_bday/utils/permission_utils.dart';
 import 'package:muski_bday/widgets/custom_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../utils/constants.dart';
+
 class UploadProfileInfo extends StatefulWidget {
   @override
   _UploadProfileInfoState createState() => _UploadProfileInfoState();
@@ -22,7 +24,7 @@ class _UploadProfileInfoState extends State<UploadProfileInfo> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height*1.1,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
@@ -92,7 +94,7 @@ class _UploadProfileInfoState extends State<UploadProfileInfo> {
                                           MediaQuery.of(context).size.height *
                                               0.4,
                                       child: ClipOval(
-                                        child: CachedNetworkImage(
+                                        child: _image != null ? Image.file(_image,fit: BoxFit.cover,) : CachedNetworkImage(
                                           imageUrl:
                                               "", //"https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
                                           fit: BoxFit.cover,
@@ -117,13 +119,24 @@ class _UploadProfileInfoState extends State<UploadProfileInfo> {
                                         color: Colors.white,
                                         borderRadius:
                                             BorderRadius.circular(20.0)),
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.camera_alt,
-                                        color:
-                                            ColorConstants.primaryGradientColor,
+                                    child: InkWell(
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.white,
+                                        ),
+                                        child: Center(
+                                          child: Image.asset(
+                                            ImageConstants.defaultPicture,
+                                            height: 25,
+                                            width: 25,
+                                          ),
+                                        ),
                                       ),
-                                      onPressed: () {
+                                      onTap: () {
                                         _getImageFromGallery();
                                       },
                                     ),
@@ -138,12 +151,20 @@ class _UploadProfileInfoState extends State<UploadProfileInfo> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Center(
-                        child: CustomButton(onPressAction: () {
+                        child: CustomButton(isTitleButton: false, onPressAction: () {
                           NavigationUtils.push(
                               context, NavigationConstants.routeUploadPicture);
                         }),
                       ),
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Center(
+                        child: CustomButton(isTitleButton: true,onPressAction: () {
+                          NavigationUtils.pop(context);
+                        }),
+                      ),
+                    ),
                   ],
                 ),
               ),

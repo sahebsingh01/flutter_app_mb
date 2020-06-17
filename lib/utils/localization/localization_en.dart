@@ -2,7 +2,7 @@ import 'localization.dart';
 
 class LocalizationEN implements Localization {
   @override
-  String get appName => "Sticks";
+  String get appName => "";
 
   @override
   String get loginTitle => "LOGIN";

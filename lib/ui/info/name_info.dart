@@ -18,7 +18,7 @@ class _NameInfoState extends State<NameInfo> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height*1.1,
           child: Stack(
             children: [
               Positioned.fill(
@@ -87,6 +87,7 @@ class _NameInfoState extends State<NameInfo> {
                               child: Form(
                                 key: _key,
                                 child: TextFormField(
+                                  controller: _nameController,
                                   cursorColor:
                                       ColorConstants.primaryGradientColor,
                                   style: TextStyle(
@@ -102,7 +103,7 @@ class _NameInfoState extends State<NameInfo> {
                                   onFieldSubmitted: (value) {
                                     if (_key.currentState.validate()) {
                                       setString(PreferencesConst.userName,
-                                          _nameController.text);
+                                          value);
                                     }
                                   },
                                   textInputAction: TextInputAction.done,
@@ -143,9 +144,12 @@ class _NameInfoState extends State<NameInfo> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
-                              child: CustomButton(onPressAction: () {
-                                NavigationUtils.push(context,
+                              child: CustomButton(isTitleButton: false, onPressAction: () {
+                                if(_key.currentState.validate()){
+                                  setString(PreferencesConst.userName, _nameController.text);
+                                  NavigationUtils.push(context,
                                     NavigationConstants.routeUploadProfileInfo);
+                                }
                               }),
                             ),
                           ],
