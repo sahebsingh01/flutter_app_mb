@@ -5,10 +5,12 @@ class CustomButton extends StatefulWidget {
   final bool isTitleButton;
   bool isUploadButton;
   final Function onPressAction;
+  String title;
   CustomButton({
     this.isTitleButton,
     @required this.onPressAction,
     this.isUploadButton,
+    this.title,
   });
   @override
   _CustomButtonState createState() => _CustomButtonState();
@@ -47,7 +49,9 @@ class _CustomButtonState extends State<CustomButton> {
                   size: (MediaQuery.of(context).size.width * 0.15) / 2,
                 )
               : Text(
-                  widget.isUploadButton == null || !widget.isUploadButton ? "Go Back" : "Upload",
+                  widget.isUploadButton == null || !widget.isUploadButton
+                      ? widget.title == null ? "Go Back" : widget.title
+                      : "Upload",
                   style: TextStyle(
                     color: Colors.white,
                   ),

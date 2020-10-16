@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class AppConstants {}
+class AppConstants {
+  static const String completedFlareAnimation = "completed";
+}
 
 class NavigationConstants {
   static const String routeLaunch = "routeLaunch";
@@ -9,6 +11,9 @@ class NavigationConstants {
   static const String routeSplashScreen = "routeSplashScreen";
   static const String routeSignatureScreen = "routeSignatureScreen";
   static const String routeUploadInformation = "routeUploadInformation";
+  static const String routeMessageScreen = "routeMessageScreen";
+  static const String routeCompletionScreen = "routeCompletionScreen";
+  static const String routeWishesScreen = "routeWishesScreen";
 }
 
 class ColorConstants {
@@ -18,6 +23,8 @@ class ColorConstants {
 
 class DicParams{
   static const String signature = "signature";
+  static const String name = "name";
+  static const String wishModel = "wishModel";
 }
 
 class FontConstants {
@@ -26,6 +33,10 @@ class FontConstants {
 
 class PreferencesConst{
   static const String userName = "name";
+  static const String message = "message";
+  static const String profilePic = "profilePic";
+  static const String pictureUrl = "pictureUrl";
+  static const String signature = "signature";
 }
 
 class ImageConstants{
@@ -35,4 +46,9 @@ class ImageConstants{
   static const String defaultPicture = "assets/images/default_picture.png";
   static const String selectPicture = "assets/images/photography.png";
   static const String defaultGroupPhoto = "assets/images/group_photo.jpg";
+
+  //Flare animations
+  static const String completedFlare = "assets/images/completed.flr";
+
+
 }

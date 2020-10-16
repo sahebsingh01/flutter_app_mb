@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muski_bday/utils/constants.dart';
+import 'package:muski_bday/utils/firebase_manager.dart';
 import 'package:muski_bday/utils/navigation.dart';
 import 'package:muski_bday/utils/preference_utils.dart';
 import 'package:muski_bday/utils/validation_utils.dart';
@@ -57,7 +58,7 @@ class _NameInfoState extends State<NameInfo> {
                         "Please enter your name that muskan is most familiar with to proceed:",
                         style: TextStyle(
                           color: Colors.white.withAlpha(200),
-                          fontSize: 25.0,
+                          fontSize: 20.0,
                         ),
                       ),
                     ),
@@ -106,6 +107,7 @@ class _NameInfoState extends State<NameInfo> {
                                           value);
                                     }
                                   },
+                                  textCapitalization: TextCapitalization.words,
                                   textInputAction: TextInputAction.done,
                                   maxLength: 25,
                                   decoration: InputDecoration(
@@ -144,7 +146,7 @@ class _NameInfoState extends State<NameInfo> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
-                              child: CustomButton(isTitleButton: false, onPressAction: () {
+                              child: CustomButton(isTitleButton: false, onPressAction: (){
                                 if(_key.currentState.validate()){
                                   setString(PreferencesConst.userName, _nameController.text);
                                   NavigationUtils.push(context,

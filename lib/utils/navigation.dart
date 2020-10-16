@@ -1,12 +1,15 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:muski_bday/ui/completionscreen/completion_screen.dart';
+import 'package:muski_bday/ui/info/message.dart';
 import 'package:muski_bday/ui/info/name_info.dart';
 import 'package:muski_bday/ui/info/signature.dart';
 import 'package:muski_bday/ui/info/upload_profile.dart';
 import 'package:muski_bday/ui/info/uploal_picture.dart';
 import 'package:muski_bday/ui/splash/splash.dart';
 import 'package:muski_bday/ui/uploadform/upload_Info.dart';
+import 'package:muski_bday/ui/wishes/wishes_screen.dart';
 import 'package:muski_bday/utils/constants.dart';
 
 class NavigationUtils {
@@ -23,11 +26,23 @@ class NavigationUtils {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case NavigationConstants.routeSignatureScreen:
         return MaterialPageRoute(builder: (_) => SignatureScreen());
+      case NavigationConstants.routeMessageScreen:
+        return MaterialPageRoute(builder: (_) => MessageScreen());
+      case NavigationConstants.routeWishesScreen:
+        return MaterialPageRoute(builder: (_) => WishesScreen());
+      case NavigationConstants.routeCompletionScreen:
+        final name = args[DicParams.name];
+        return MaterialPageRoute(
+            builder: (_) => CompletionScreen(
+                  name: name,
+                ));
       case NavigationConstants.routeUploadInformation:
         final Uint8List signature = args[DicParams.signature];
+        final wishModel = args[DicParams.wishModel];
         return MaterialPageRoute(
             builder: (_) => UploadInformation(
                   signature: signature,
+                  wishModel: wishModel,
                 ));
       default:
         return _errorRoute(" Coming soon...");

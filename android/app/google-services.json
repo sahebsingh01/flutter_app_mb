@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "591526062243",
+    "firebase_url": "https://muski-b-day.firebaseio.com",
+    "project_id": "muski-b-day",
+    "storage_bucket": "muski-b-day.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591526062243:android:046518c2842f5debe5b716",
+        "android_client_info": {
+          "package_name": "com.example.muski_bday"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591526062243-akv6i2uda9sfd6q1mjeigo1cp822rsq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPhd1ai6CzsgVdJuMYY2r1AmYf64G-bLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591526062243-akv6i2uda9sfd6q1mjeigo1cp822rsq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

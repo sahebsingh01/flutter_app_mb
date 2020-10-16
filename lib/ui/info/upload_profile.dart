@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:muski_bday/utils/check_network_connection.dart';
 import 'package:muski_bday/utils/constants.dart';
+import 'package:muski_bday/utils/firebase_manager.dart';
 import 'package:muski_bday/utils/navigation.dart';
 import 'package:muski_bday/utils/permission_utils.dart';
+import 'package:muski_bday/utils/preference_utils.dart';
 import 'package:muski_bday/widgets/custom_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -64,7 +66,7 @@ class _UploadProfileInfoState extends State<UploadProfileInfo> {
                         "Please upload a picture of yourself which will be shown in the list:",
                         style: TextStyle(
                           color: Colors.white.withAlpha(200),
-                          fontSize: 25.0,
+                          fontSize: 20.0,
                         ),
                       ),
                     ),
@@ -269,9 +271,9 @@ class _UploadProfileInfoState extends State<UploadProfileInfo> {
     );
     if (_picture != _image && _picture != null) {
       if (await checkNetworkConnection(context)) {
+        FirebaseManager.uploadImage(_picture,true,getString(PreferencesConst.userName));
         setState(() {
           _image = _picture;
-          // _uploadImage(_picture);
         });
       }
     }

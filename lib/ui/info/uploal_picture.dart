@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:muski_bday/utils/check_network_connection.dart';
 import 'package:muski_bday/utils/constants.dart';
+import 'package:muski_bday/utils/firebase_manager.dart';
 import 'package:muski_bday/utils/navigation.dart';
 import 'package:muski_bday/utils/permission_utils.dart';
+import 'package:muski_bday/utils/preference_utils.dart';
 import 'package:muski_bday/widgets/custom_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,7 +26,7 @@ class _UploadPictureState extends State<UploadPicture> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height*1.1,
+          height: MediaQuery.of(context).size.height * 1.1,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
@@ -64,7 +66,7 @@ class _UploadPictureState extends State<UploadPicture> {
                         "Please upload a picture of yourself with muskan:",
                         style: TextStyle(
                           color: Colors.white.withAlpha(200),
-                          fontSize: 25.0,
+                          fontSize: 20.0,
                         ),
                       ),
                     ),
@@ -81,19 +83,24 @@ class _UploadPictureState extends State<UploadPicture> {
                                     MediaQuery.of(context).size.height * 0.3,
                                 width: MediaQuery.of(context).size.height * 0.8,
                                 color: Colors.white,
-                                child: _image != null ? Image.file(_image,fit: BoxFit.cover,) : CachedNetworkImage(
-                                  imageUrl: "",
-                                  fit: BoxFit.cover,
-                                  errorWidget: (context, value, error) =>
-                                      Container(
-                                    child: Image.asset(
-                                      ImageConstants.defaultGroupPhoto,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  placeholder: (context, url) => Center(
-                                      child: CircularProgressIndicator()),
-                                ),
+                                child: _image != null
+                                    ? Image.file(
+                                        _image,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : CachedNetworkImage(
+                                        imageUrl: "",
+                                        fit: BoxFit.cover,
+                                        errorWidget: (context, value, error) =>
+                                            Container(
+                                          child: Image.asset(
+                                            ImageConstants.defaultGroupPhoto,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
+                                      ),
                               ),
                             ),
                             Align(
@@ -132,10 +139,12 @@ class _UploadPictureState extends State<UploadPicture> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Center(
-                        child: CustomButton(isTitleButton: false, onPressAction: () {
-                          NavigationUtils.push(
-                              context, NavigationConstants.routeSignatureScreen);
-                        }),
+                        child: CustomButton(
+                            isTitleButton: false,
+                            onPressAction: () {
+                              NavigationUtils.push(context,
+                                  NavigationConstants.routeMessageScreen);
+                            }),
                       ),
                     ),
                     Padding(
@@ -239,7 +248,6 @@ class _UploadPictureState extends State<UploadPicture> {
   Future _getImageFromCamera() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     if (await checkNetworkConnection(context)) {
-      // _uploadImage(image);
       setState(() {
         _image = image;
       });
@@ -254,7 +262,8 @@ class _UploadPictureState extends State<UploadPicture> {
       if (await checkNetworkConnection(context)) {
         setState(() {
           _image = _picture;
-          // _uploadImage(_picture);
+          FirebaseManager.uploadImage(
+          _picture, false, getString(PreferencesConst.userName));
         });
       }
     }

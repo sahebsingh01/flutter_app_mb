@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.blue,
-          accentColor: ColorConstants.secondaryGradientColor,
+          accentColor: Colors.white,
         ),
         initialRoute: NavigationConstants.routeSplashScreen,
         onGenerateRoute: NavigationUtils.generateRoute,

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:muski_bday/utils/constants.dart';
 import 'package:muski_bday/utils/dialog_utils.dart';
+import 'package:muski_bday/utils/firebase_manager.dart';
 import 'package:muski_bday/utils/navigation.dart';
 import 'package:muski_bday/utils/preference_utils.dart';
 import 'package:muski_bday/widgets/custom_button.dart';
@@ -65,7 +68,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
                         "Please add your signature:",
                         style: TextStyle(
                           color: Colors.white.withAlpha(200),
-                          fontSize: 25.0,
+                          fontSize: 20.0,
                         ),
                       ),
                     ),
@@ -143,19 +146,28 @@ class _SignatureScreenState extends State<SignatureScreen> {
                             onPressAction: () async {
                               if (_controller.isNotEmpty) {
                                 var data = await _controller.toPngBytes();
-                                NavigationUtils.push(context, NavigationConstants.routeUploadInformation,arguments: {DicParams.signature: data});
-                              }
-                              else{
+                                FirebaseManager.uploadSignature(data,
+                                    getString(PreferencesConst.userName));
+                                NavigationUtils.push(context,
+                                    NavigationConstants.routeUploadInformation,
+                                    arguments: {DicParams.signature: data});
+                              } else {
                                 DialogUtils.showOkCancelAlertDialog(
-                                  context: context,
-                                  cancelButtonTitle: "No",
-                                  okButtonTitle: "Yes",
-                                  message: "Are you sure you want to proceed without adding your signature?",
-                                  isCancelEnable: true,
-                                  okButtonAction: (){
-                                    NavigationUtils.push(context, NavigationConstants.routeUploadInformation,arguments: {DicParams.signature: null});
-                                  }
-                                );
+                                    context: context,
+                                    cancelButtonTitle: "No",
+                                    okButtonTitle: "Yes",
+                                    message:
+                                        "Are you sure you want to proceed without adding your signature?",
+                                    isCancelEnable: true,
+                                    okButtonAction: () {
+                                      NavigationUtils.push(
+                                          context,
+                                          NavigationConstants
+                                              .routeUploadInformation,
+                                          arguments: {
+                                            DicParams.signature: null
+                                          });
+                                    });
                               }
                             }),
                       ),
