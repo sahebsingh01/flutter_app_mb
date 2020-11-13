@@ -21,31 +21,31 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // status bar color
     ));
-    
+
     initSharedPreferences();
     return MaterialApp(
-        builder: (context, child) {
-          return MediaQuery(
-            child: child,
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-          );
-        },
-        title: 'Muskan\'s Birthday',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.blue,
-          accentColor: Colors.white,
-        ),
-        initialRoute: NavigationConstants.routeSplashScreen,
-        onGenerateRoute: NavigationUtils.generateRoute,
-        localizationsDelegates: [
-          const MyLocalizationsDelegate(),
-          DefaultMaterialLocalizations.delegate,
-          DefaultWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('en', ''),
-        ],
+      builder: (context, child) {
+        return MediaQuery(
+          child: child,
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        );
+      },
+      title: 'Muskan\'s Birthday',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+        accentColor: Colors.white,
+      ),
+      initialRoute: NavigationConstants.routeSplashScreenToWishes,
+      onGenerateRoute: NavigationUtils.generateRoute,
+      localizationsDelegates: [
+        const MyLocalizationsDelegate(),
+        DefaultMaterialLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''),
+      ],
     );
   }
 }

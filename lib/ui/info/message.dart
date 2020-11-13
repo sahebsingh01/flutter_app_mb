@@ -97,7 +97,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                                 0.065) /
                                             3),
                                 validator: (value) {
-                                  return isValidName(context, value);
+                                  return isValidMessage(context, value);
                                 },
                                 onFieldSubmitted: (value) {
                                   if (_key.currentState.validate()) {

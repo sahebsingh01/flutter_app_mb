@@ -34,6 +34,16 @@ String isValidName(BuildContext context, String value) {
   }
 }
 
+String isValidMessage(BuildContext context, String value) {
+  if (value.isEmpty) {
+    return Localization.of(context).msgEnterMessage;
+  } else if (value.trim().length < 2) {
+    return Localization.of(context).msgEnterValidMessage;
+  } else {
+    return null;
+  }
+}
+
 String isValidGroupName(BuildContext context, String value) {
   if (value.trim().isEmpty) {
     return Localization.of(context).msgEnterGroupName;

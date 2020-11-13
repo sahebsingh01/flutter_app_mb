@@ -8,6 +8,7 @@ import 'package:muski_bday/ui/info/signature.dart';
 import 'package:muski_bday/ui/info/upload_profile.dart';
 import 'package:muski_bday/ui/info/uploal_picture.dart';
 import 'package:muski_bday/ui/splash/splash.dart';
+import 'package:muski_bday/ui/uploadform/photo_view_screen.dart';
 import 'package:muski_bday/ui/uploadform/upload_Info.dart';
 import 'package:muski_bday/ui/wishes/wishes_screen.dart';
 import 'package:muski_bday/utils/constants.dart';
@@ -23,9 +24,23 @@ class NavigationUtils {
       case NavigationConstants.routeUploadPicture:
         return MaterialPageRoute(builder: (_) => UploadPicture());
       case NavigationConstants.routeSplashScreen:
-        return MaterialPageRoute(builder: (_) => SplashScreen());
+        return MaterialPageRoute(
+            builder: (_) => SplashScreen(
+                  isUploadForm: true,
+                ));
+      case NavigationConstants.routeSplashScreenToWishes:
+        return MaterialPageRoute(
+            builder: (_) => SplashScreen(
+                  isUploadForm: false,
+                ));
       case NavigationConstants.routeSignatureScreen:
         return MaterialPageRoute(builder: (_) => SignatureScreen());
+      case NavigationConstants.routePhotoViewScreen:
+        final imageUrl = args[DicParams.imageUrl];
+        return MaterialPageRoute(
+            builder: (_) => PhotoViewScreen(
+                  imageUrl: imageUrl,
+                ));
       case NavigationConstants.routeMessageScreen:
         return MaterialPageRoute(builder: (_) => MessageScreen());
       case NavigationConstants.routeWishesScreen:

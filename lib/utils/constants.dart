@@ -8,12 +8,14 @@ class NavigationConstants {
   static const String routeLaunch = "routeLaunch";
   static const String routeUploadProfileInfo = "routeUploadProfileInfo";
   static const String routeUploadPicture = "routeUploadPicture";
-  static const String routeSplashScreen = "routeSplashScreen";
   static const String routeSignatureScreen = "routeSignatureScreen";
+  static const String routeSplashScreen = "routeSplashScreen";
   static const String routeUploadInformation = "routeUploadInformation";
   static const String routeMessageScreen = "routeMessageScreen";
   static const String routeCompletionScreen = "routeCompletionScreen";
   static const String routeWishesScreen = "routeWishesScreen";
+  static const String routePhotoViewScreen = "routePhotoViewScreen";
+  static const String routeSplashScreenToWishes = "routeSplashScreenToWishes";
 }
 
 class ColorConstants {
@@ -25,6 +27,8 @@ class DicParams{
   static const String signature = "signature";
   static const String name = "name";
   static const String wishModel = "wishModel";
+  static const String isUploadForm = "isUploadForm";
+  static const String imageUrl = "imageUrl";
 }
 
 class FontConstants {

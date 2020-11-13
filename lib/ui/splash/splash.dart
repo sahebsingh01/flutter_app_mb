@@ -7,16 +7,33 @@ import '../../utils/navigation.dart';
 import '../../utils/navigation.dart';
 
 class SplashScreen extends StatefulWidget {
+  final bool isUploadForm;
+  SplashScreen({
+    @required this.isUploadForm,
+  });
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Timer timer;
+  Timer _timer;
+  double dimension = 0.0;
+
   void _startTimer() {
-    timer = Timer(Duration(seconds: 2), () {
-      NavigationUtils.push(context, NavigationConstants.routeLaunch);
-      timer.cancel();
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (timer.tick == 1) {
+        setState(() {
+          dimension = MediaQuery.of(context).size.width;
+        });
+      }
+      if (timer.tick == 3) {
+        widget.isUploadForm
+            ? NavigationUtils.pushAndRemoveUntil(
+                context, NavigationConstants.routeLaunch)
+            : NavigationUtils.pushAndRemoveUntil(
+                context, NavigationConstants.routeWishesScreen);
+        _timer.cancel();
+      }
     });
   }
 
@@ -29,14 +46,24 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: Container(
-            height: MediaQuery.of(context).size.width,
-        child: Center(child: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: Image.asset(ImageConstants.appLogoCircle),
-        )),
-      )),
+      body: Container(
+        child: Center(
+          child: AnimatedContainer(
+            height: dimension,
+            width: dimension,
+            curve: Curves.linearToEaseOut,
+            duration: Duration(seconds: 1),
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.0),
+                child: Image.asset(
+                  ImageConstants.appLogoCircle,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

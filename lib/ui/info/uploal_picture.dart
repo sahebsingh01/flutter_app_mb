@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:muski_bday/utils/check_network_connection.dart';
 import 'package:muski_bday/utils/constants.dart';
+import 'package:muski_bday/utils/dialog_utils.dart';
 import 'package:muski_bday/utils/firebase_manager.dart';
 import 'package:muski_bday/utils/navigation.dart';
 import 'package:muski_bday/utils/permission_utils.dart';
@@ -142,8 +144,27 @@ class _UploadPictureState extends State<UploadPicture> {
                         child: CustomButton(
                             isTitleButton: false,
                             onPressAction: () {
-                              NavigationUtils.push(context,
-                                  NavigationConstants.routeMessageScreen);
+                              if (_image == null) {
+                                DialogUtils.showOkCancelAlertDialog(
+                                    context: context,
+                                    isCancelEnable: true,
+                                    cancelButtonTitle: "No",
+                                    cancelButtonAction: () {
+                                      _getImageFromGallery();
+                                    },
+                                    message:
+                                        "Do you wish to proceed without adding a picture of you with Muskan?",
+                                    okButtonTitle: "Yes",
+                                    okButtonAction: () {
+                                      NavigationUtils.push(
+                                          context,
+                                          NavigationConstants
+                                              .routeUploadPicture);
+                                    });
+                              } else {
+                                NavigationUtils.push(context,
+                                    NavigationConstants.routeMessageScreen);
+                              }
                             }),
                       ),
                     ),
@@ -255,17 +276,53 @@ class _UploadPictureState extends State<UploadPicture> {
   }
 
   Future _getImageFromGallery() async {
-    _picture = await ImagePicker.pickImage(
-      source: ImageSource.gallery,
-    );
-    if (_picture != _image && _picture != null) {
-      if (await checkNetworkConnection(context)) {
+    final pickedImage =
+        await ImagePicker().getImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      _cropImage(pickedImage.path);
+    }
+  }
+
+  Future<Null> _cropImage(String path) async {
+    File croppedFile = await ImageCropper.cropImage(
+        sourcePath: path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Crop Image',
+            toolbarColor: ColorConstants.primaryGradientColor,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          title: 'Mb',
+        ));
+    if (croppedFile != null) {
+      setState(() async {
         setState(() {
-          _image = _picture;
-          FirebaseManager.uploadImage(
-          _picture, false, getString(PreferencesConst.userName));
+          _image = croppedFile;
         });
-      }
+        if (await checkNetworkConnection(context)) {
+          FirebaseManager.uploadImage(
+              croppedFile, false, getString(PreferencesConst.userName));
+        }
+      });
     }
   }
 }

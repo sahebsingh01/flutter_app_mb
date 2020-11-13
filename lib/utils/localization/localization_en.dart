@@ -804,4 +804,10 @@ class LocalizationEN implements Localization {
 
   @override
   String get labelShareViaSMS => "Share via SMS";
+
+  @override
+  String get msgEnterMessage => "Please enter a message";
+
+  @override
+  String get msgEnterValidMessage => "Length of the message should be greater than 2";
 }

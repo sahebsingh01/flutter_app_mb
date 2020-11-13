@@ -73,8 +73,19 @@ class _WishesScreenState extends State<WishesScreen> {
                   fit: BoxFit.cover,
                   errorWidget: (context, value, error) =>
                       Image.asset(ImageConstants.userDefaultImage),
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[300],
+                    highlightColor: Colors.grey[100],
+                    enabled: true,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      width: MediaQuery.of(context).size.height * 0.1,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(
+                              (MediaQuery.of(context).size.height * 0.1) / 2)),
+                    ),
+                  ),
                 ),
               ),
             ),

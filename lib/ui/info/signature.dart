@@ -6,6 +6,7 @@ import 'package:muski_bday/utils/dialog_utils.dart';
 import 'package:muski_bday/utils/firebase_manager.dart';
 import 'package:muski_bday/utils/navigation.dart';
 import 'package:muski_bday/utils/preference_utils.dart';
+import 'package:muski_bday/utils/progress_dialog.dart';
 import 'package:muski_bday/widgets/custom_button.dart';
 import 'package:signature/signature.dart';
 
@@ -146,8 +147,10 @@ class _SignatureScreenState extends State<SignatureScreen> {
                             onPressAction: () async {
                               if (_controller.isNotEmpty) {
                                 var data = await _controller.toPngBytes();
-                                FirebaseManager.uploadSignature(data,
-                                    getString(PreferencesConst.userName));
+                                ProgressDialogUtils.showProgressDialog(context);
+                                await FirebaseManager.uploadSignature(
+                                    data, getString(PreferencesConst.userName));
+                                ProgressDialogUtils.dismissProgressDialog();
                                 NavigationUtils.push(context,
                                     NavigationConstants.routeUploadInformation,
                                     arguments: {DicParams.signature: data});

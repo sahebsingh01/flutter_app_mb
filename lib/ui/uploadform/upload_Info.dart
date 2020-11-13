@@ -148,7 +148,7 @@ class _UploadInformationState extends State<UploadInformation> {
                       numberOfParticles: 2, // number of particles to emit
                       gravity: 0.05, // gravity - or fall speed
                       shouldLoop: false,
-                      maxBlastForce: 100,
+                      maxBlastForce: 200,
                       colors: const [
                         Colors.green,
                         Colors.blue,
@@ -166,13 +166,13 @@ class _UploadInformationState extends State<UploadInformation> {
                     left: 0,
                     child: ConfettiWidget(
                       confettiController: _controllerBottomLeft,
-                      blastDirection: 30, // radial value - LEFT
+                      blastDirection: -pi / 3, // radial value - LEFT
                       particleDrag: 0.05, // apply drag to the confetti
                       emissionFrequency: 0.2, // how often it should emit
                       numberOfParticles: 2, // number of particles to emit
                       gravity: 0.05, // gravity - or fall speed
                       shouldLoop: false,
-                      maxBlastForce: 100,
+                      maxBlastForce: 200,
                       colors: const [
                         Colors.green,
                         Colors.blue,
@@ -205,24 +205,37 @@ class _UploadInformationState extends State<UploadInformation> {
 
   Widget _getProfilePicture() => Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-        child: CircleAvatar(
-          radius: MediaQuery.of(context).size.width * 0.12,
-          backgroundColor: ColorConstants.primaryGradientColor,
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.4,
-              width: MediaQuery.of(context).size.height * 0.4,
-              child: ClipOval(
-                child: CachedNetworkImage(
-                  imageUrl: widget.wishModel != null
-                      ? widget.wishModel.profilePic
-                      : (_profileUrl == null ? "" : _profileUrl),
-                  fit: BoxFit.cover,
-                  errorWidget: (context, value, error) =>
-                      Image.asset(ImageConstants.userDefaultImage),
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
+        child: InkWell(
+          onTap: () {
+            if (widget.wishModel != null) {
+              NavigationUtils.push(
+                  context, NavigationConstants.routePhotoViewScreen,
+                  arguments: {
+                    DicParams.imageUrl: widget.wishModel.profilePic,
+                  });
+            }
+          },
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          child: CircleAvatar(
+            radius: MediaQuery.of(context).size.width * 0.12,
+            backgroundColor: ColorConstants.primaryGradientColor,
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                width: MediaQuery.of(context).size.height * 0.4,
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: widget.wishModel != null
+                        ? widget.wishModel.profilePic
+                        : (_profileUrl == null ? "" : _profileUrl),
+                    fit: BoxFit.fill,
+                    errorWidget: (context, value, error) =>
+                        Image.asset(ImageConstants.userDefaultImage),
+                    placeholder: (context, url) =>
+                        Center(child: CircularProgressIndicator()),
+                  ),
                 ),
               ),
             ),
@@ -278,23 +291,36 @@ class _UploadInformationState extends State<UploadInformation> {
 
   Widget _getPictureWithMuskan() => Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.25,
-          width: MediaQuery.of(context).size.width,
-          color: ColorConstants.primaryGradientColor,
-          child: CachedNetworkImage(
-            imageUrl: widget.wishModel != null
-                ? widget.wishModel.pictureUrl
-                : (_pictureUrl == null ? "" : _pictureUrl),
-            fit: BoxFit.cover,
-            errorWidget: (context, value, error) => Container(
-              child: Image.asset(
-                ImageConstants.defaultGroupPhoto,
-                fit: BoxFit.cover,
+        child: InkWell(
+          onTap: () {
+            if (widget.wishModel != null) {
+              NavigationUtils.push(
+                  context, NavigationConstants.routePhotoViewScreen,
+                  arguments: {
+                    DicParams.imageUrl: widget.wishModel.pictureUrl,
+                  });
+            }
+          },
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.25,
+            width: MediaQuery.of(context).size.width,
+            color: ColorConstants.primaryGradientColor,
+            child: CachedNetworkImage(
+              imageUrl: widget.wishModel != null
+                  ? widget.wishModel.pictureUrl
+                  : (_pictureUrl == null ? "" : _pictureUrl),
+              fit: BoxFit.cover,
+              errorWidget: (context, value, error) => Container(
+                child: Image.asset(
+                  ImageConstants.defaultGroupPhoto,
+                  fit: BoxFit.cover,
+                ),
               ),
+              placeholder: (context, url) =>
+                  Center(child: CircularProgressIndicator()),
             ),
-            placeholder: (context, url) =>
-                Center(child: CircularProgressIndicator()),
           ),
         ),
       );

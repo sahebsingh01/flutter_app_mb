@@ -102,6 +102,8 @@ abstract class Localization {
   String get msgEnterValidAddress;
   String get msgEnterName;
   String get msgEnterValidName;
+  String get msgEnterMessage;
+  String get msgEnterValidMessage;
   String get msgEnterMobile;
   String get msgEnterValidMobile;
   String get msgEnterPassCode;
